@@ -1,22 +1,22 @@
-CREATE DATABASE emp;
-USE emp;
+CREATE DATABASE emp2;
+USE emp2;
 
 CREATE TABLE employee(
-   emp_id INT primary key,
-   first_name VARCHAR(40) NOT NULL,
+   emp_id INT PRIMARY KEY,
+   first_name VARCHAR(40),
    last_name VARCHAR(40),
    birth_date DATE,
-   sex VARCHAR(1) NOT NULL,
-   super_id INT,
+   sex VARCHAR(1),
    salary INT,
+   super_id INT,
    branch_id INT
 );
 
 CREATE TABLE branch(
      branch_id INT PRIMARY KEY,
-     branch_name VARCHAR(40) NOT NULL,
-     mgr_id INT NOT NULL,
-     mgr_start_date DATE NOT NULL,
+     branch_name VARCHAR(40),
+     mgr_id INT ,
+     mgr_start_date DATE,
      FOREIGN KEY(mgr_id) REFERENCES employee(emp_id) ON DELETE SET NULL
 );
 
@@ -53,16 +53,22 @@ CREATE TABLE branch_supplier(
      PRIMARY KEY (branch_id,supplier_name),
      FOREIGN KEY (branch_id) REFERENCES branch(branch_id) ON DELETE CASCADE
 );
+-- -----------------------------------------------------------------------------
 
-INSERT INTO employee VALUES(100,'Apurva','Sarode','2021-07-13','F',250000,'NULL',1);
-INSERT INTO branch VALUES(1,'Corporate',100,'2006-11-05');
+-- Corporate
+INSERT INTO employee VALUES(100, 'Apurva', 'Sarode', '2021-07-14', 'M', 250000, NULL, NULL);
+
+INSERT INTO branch VALUES(1, 'Corporate', 100, '2006-11-05');
 UPDATE employee
 SET branch_id = 1
 WHERE emp_id = 100;
 
-INSERT INTO employee VALUES(101,'Gaurav','Patil','2019-05-13','M',50000,100,1);
-INSERT INTO employee VALUES(102,'Shreya','Joshi','1997-11-02','F',7000,100,2);
-INSERT branch VALUES(2,'Scranton',102,'1996-04-06');
+INSERT INTO employee VALUES(101, 'Gaurav', 'Patil', '2019-05-13', 'M', 50000, 100, 1);
+
+-- Scranton
+INSERT INTO employee VALUES(102, 'Shreya', 'Joshi', '1997-11-02', 'F', 7000, 100, NULL);
+
+INSERT branch VALUES(2, 'Scranton', 102, '1996-04-06');
 UPDATE employee
 SET branch_id = 2
 WHERE emp_id = 102;
@@ -71,17 +77,48 @@ INSERT INTO employee VALUES(103,'Mansi','Dugad','1980-06-02','F',47000,102,2);
 INSERT INTO employee VALUES(104,'Kelly','Shah','2000-08-02','F',78000,102,2);
 INSERT INTO employee VALUES(105,'Angelina','Martin','2001-04-11','F',9000,102,2);
 
+-- Stamford
+INSERT INTO employee VALUES(106, 'Josh', 'Porter', '1969-09-05', 'M', 78000, 100, NULL);
+
+INSERT INTO branch VALUES(3, 'Stamford', 106, '1998-02-13');
+UPDATE employee
+SET branch_id = 3
+WHERE emp_id = 106;
+
+INSERT INTO employee VALUES(107, 'Andy', 'Bernard', '1973-07-22', 'M', 65000, 106, 3);
+
+INSERT INTO employee VALUES(108, 'Jim', 'Halpert', '1978-10-01', 'M', 71000, 106, 3);
+
 -- Branch Supplier
 INSERT INTO branch_supplier VALUES(2, 'Hammer Mill', 'Paper');
 INSERT INTO branch_supplier VALUES(2, 'Uni-ball', 'Writing Utensils');
 INSERT INTO branch_supplier VALUES(3, 'Patriot Paper', 'Paper');
-INSERT INTO branch_supplier VALUES(2, 'Uni-ball', 'Custom');
+INSERT INTO branch_supplier VALUES(2, 'J.T. Forms & Labels', 'Custom Forms');
+INSERT INTO branch_supplier VALUES(3, 'Uni-ball', 'Writing Utensils');
 INSERT INTO branch_supplier VALUES(3, 'Hammer Mill', 'Paper');
+INSERT INTO branch_supplier VALUES(3, 'Stamford Lables', 'Custom Forms');
+
+-- CLIENT
+INSERT INTO client VALUES(400, 'Dunmore Highschool', 2);
+INSERT INTO client VALUES(401, 'Lackawana Country', 2);
+INSERT INTO client VALUES(402, 'FedEx', 3);
+INSERT INTO client VALUES(403, 'John Daly Law, LLC', 3);
+INSERT INTO client VALUES(404, 'Scranton Whitepages', 2);
+INSERT INTO client VALUES(405, 'Times Newspaper', 3);
+INSERT INTO client VALUES(406, 'FedEx', 2);
 
 -- Works_with
-INSERT INTO works_with VALUES(105, 400, 500);
+INSERT INTO works_with VALUES(105, 400, 55000);
 INSERT INTO works_with VALUES(102, 401, 267000);
 INSERT INTO works_with VALUES(108, 402, 22500);
 INSERT INTO works_with VALUES(107, 403, 5000);
+INSERT INTO works_with VALUES(108, 403, 12000);
+INSERT INTO works_with VALUES(105, 404, 33000);
+INSERT INTO works_with VALUES(107, 405, 26000);
+INSERT INTO works_with VALUES(102, 406, 15000);
+INSERT INTO works_with VALUES(105, 406, 130000);
 
-SELECT * FROM branch_supplier;
+SELECT * FROM employee;
+SELECT * FROM works_with;
+SELECT * FROM branch_supplier; 
+
