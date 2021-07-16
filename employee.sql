@@ -122,7 +122,8 @@ SELECT * FROM employee;
 SELECT * FROM works_with;
 SELECT * FROM branch_supplier; 
 
--- Functions
+-- --------------------------------------------------------------------------------------------------------------------------
+--                                                          Functions                                                      --
 
 -- 1.Finding Number of employees
 SELECT COUNT(emp_id)
@@ -151,3 +152,41 @@ GROuP BY sex;
 SELECT SUM(total_sales), emp_id
 FROM works_with
 GROUP BY emp_id; 
+
+-- -------------------------------------------------------------------------------------------------------------------------
+--                                                      wildcards                                                         --
+
+-- % means any # characters
+-- _ means one character
+
+-- 1.Find any clients who are an LLC
+SELECT *
+FROM client
+WHERE client_name LIKE '%LLC';
+
+-- 2. Find any branch supplier who are in the label business
+SELECT *
+FROM branch_supplier
+WHERE supplier_name LIKE '%Label%';
+
+-- 3. Find any employee born in october(10th month)
+SELECT *
+FROM employee
+WHERE birth_date LIKE '____-10%';   
+
+-- -------------------------------------------------------------------------------------------------------------------------
+--                                                    Union                                                               --
+-- 1. Find list of employee and branch names
+SELECT first_name AS Company_name
+FROM employee
+UNION
+SELECT branch_name 
+FROM branch; 
+
+-- 2.List of clients and branch suppliers with branch id
+SELECT client_name, client.branch_id
+FROM client
+UNION
+SELECT supplier_name, branch_supplier.branch_id
+FROM branch_supplier;
+
