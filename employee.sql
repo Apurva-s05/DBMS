@@ -122,3 +122,32 @@ SELECT * FROM employee;
 SELECT * FROM works_with;
 SELECT * FROM branch_supplier; 
 
+-- Functions
+
+-- 1.Finding Number of employees
+SELECT COUNT(emp_id)
+FROM employee;
+
+-- 2. Finding number of female born after 1970
+SELECT COUNT(emp_id)
+FROM employee
+WHERE sex = 'F' AND birth_date > '1970-01-01';
+
+-- 3.Average of man employee salary
+SELECT AVG(salary)
+FROM employee
+WHERE sex = 'M';
+
+-- 4.Sum of man employee salary
+SELECT SUM(salary)
+FROM employee
+
+-- 5.Number of males and females
+SELECT COUNT(sex), sex
+FROM employee
+GROuP BY sex;
+
+-- 6.Total sales by each salesman
+SELECT SUM(total_sales), emp_id
+FROM works_with
+GROUP BY emp_id; 
